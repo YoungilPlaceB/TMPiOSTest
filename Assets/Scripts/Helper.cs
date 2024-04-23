@@ -1,3 +1,4 @@
+using NativeColorScheme;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -40,7 +41,7 @@ public class Helper : MonoBehaviour, IPointerClickHandler
         if(_passwordInputFieldSimulatorPrefab != null)
         {
             _passwordInputFieldSimulator = Instantiate(_passwordInputFieldSimulatorPrefab);
-            _passwordInputFieldSimulator.Init(_keyboard);
+            _passwordInputFieldSimulator.Init(_keyboard, ColorSchemeUtil.Current == ColorScheme.Dark);
 
             _passwordInputFieldSimulator.onCancelButtonClicked.AddListener(() =>
             {

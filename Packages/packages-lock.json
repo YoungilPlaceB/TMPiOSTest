@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.developedwithlove.nativecolorscheme": {
+      "version": "https://github.com/ryanslikesocool/NativeColorScheme.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "2c7a68c09d20d61bbc784d899e98de1f6d1472fc"
+    },
     "com.unity.collab-proxy": {
       "version": "2.2.0",
       "depth": 0,
