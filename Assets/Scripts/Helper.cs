@@ -15,7 +15,6 @@ public class Helper : MonoBehaviour, IPointerClickHandler
 
     public void Init(TMP_InputField passwordInputUI)
     {
-        //모바일에서만 동작
         if (Application.platform != RuntimePlatform.Android && Application.platform != RuntimePlatform.IPhonePlayer)
             return;
 
@@ -77,6 +76,13 @@ public class Helper : MonoBehaviour, IPointerClickHandler
         }
 
         if (_keyboard.status != TouchScreenKeyboard.Status.Visible)
+        {
+            DestroyPasswordSimulator();
+            _keyboard = null;
+            return;
+        }
+
+        if(_passwordInputFieldSimulator == null)
         {
             DestroyPasswordSimulator();
             _keyboard = null;

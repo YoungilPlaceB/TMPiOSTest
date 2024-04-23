@@ -5,8 +5,7 @@ public class PasswordInputFieldSimulator : MonoBehaviour
 {
     [SerializeField] Canvas _canvas;
     [SerializeField] TMP_InputField _inputField;
-
-    RectTransform _background;
+    [SerializeField] RectTransform _background;
 
     TouchScreenKeyboard _keyboard;
     string storedText = "";
@@ -14,7 +13,6 @@ public class PasswordInputFieldSimulator : MonoBehaviour
     public void Init(TouchScreenKeyboard keyboard)
     {
         _keyboard = keyboard;
-        _background = _inputField.GetComponent<RectTransform>();
     }
 
     void MaskText()
@@ -46,5 +44,13 @@ public class PasswordInputFieldSimulator : MonoBehaviour
             MaskText();
             storedText = _keyboard.text;
         }
+    }
+
+    public void Close()
+    {
+        if(_keyboard != null)
+            _keyboard.active = false;
+
+        Destroy(gameObject);
     }
 }
