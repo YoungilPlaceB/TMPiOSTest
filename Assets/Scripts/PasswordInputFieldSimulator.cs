@@ -91,20 +91,20 @@ public class PasswordInputFieldSimulator : MonoBehaviour
 
     public void OnCloseAreaClicked()
     {
-        onCloseAreaClicked.Invoke();
         if(_keyboard != null)
             _keyboard.active = false;
 
         Destroy(gameObject);
+        onCloseAreaClicked.Invoke();
     }
 
     public void OnCancelButtonClicked()
     {
-        onOKButtonClicked.Invoke();        
+        onCancelButtonClicked.Invoke();        
     }
 
     public void OnOKButtonClicked()
     {
-        onCancelButtonClicked.Invoke();
+        onOKButtonClicked.Invoke();
     }
 }
