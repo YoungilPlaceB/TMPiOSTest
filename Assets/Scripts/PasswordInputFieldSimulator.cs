@@ -93,7 +93,7 @@ public class PasswordInputFieldSimulator : MonoBehaviour
 
         float height = Utility.GetKeyboardHeight();
 
-        float h = height / _canvas.scaleFactor;
+        float h = (height / _canvas.scaleFactor) - 1;
         Background.anchoredPosition = new Vector2(0, h);
 
         if(storedText != _keyboard.text)
