@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -77,7 +77,7 @@ public class PasswordInputFieldSimulator : MonoBehaviour
         string maskedText = "";
         for (int i = 0; i < _keyboard.text.Length-1; i++)
         {
-            maskedText += "*";
+            maskedText += "⦁";
         }
 
         InputField.text = maskedText;
