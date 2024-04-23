@@ -13,9 +13,11 @@ public class Helper : MonoBehaviour, IPointerClickHandler
     [SerializeField] PasswordInputFieldSimulator _passwordInputFieldSimulatorPrefab;
     PasswordInputFieldSimulator _passwordInputFieldSimulator;
 
+    string _orgText;
+
     public void Init(TMP_InputField passwordInputUI)
     {
-        if (Application.platform != RuntimePlatform.Android && Application.platform != RuntimePlatform.IPhonePlayer)
+        if (Application.platform != RuntimePlatform.IPhonePlayer)
             return;
 
         _tmpInputField = passwordInputUI;
@@ -39,6 +41,18 @@ public class Helper : MonoBehaviour, IPointerClickHandler
         {
             _passwordInputFieldSimulator = Instantiate(_passwordInputFieldSimulatorPrefab);
             _passwordInputFieldSimulator.Init(_keyboard);
+
+            _passwordInputFieldSimulator.onCancelButtonClicked.AddListener(() =>
+            {
+                _tmpInputField.text = _orgText;
+                CloseKeyboard();
+            });
+
+            _passwordInputFieldSimulator.onOKButtonClicked.AddListener(() =>
+            {
+                _keyboard.text = _passwordInputFieldSimulator.InputField.text;
+                CloseKeyboard();
+            });
         }
     }
 
@@ -46,9 +60,23 @@ public class Helper : MonoBehaviour, IPointerClickHandler
     {
         if(_passwordInputFieldSimulator != null)
         {
+            _passwordInputFieldSimulator.onOKButtonClicked.RemoveAllListeners();
+            _passwordInputFieldSimulator.onCancelButtonClicked.RemoveAllListeners();
+
             Destroy(_passwordInputFieldSimulator.gameObject);
             _passwordInputFieldSimulator = null;
         }
+    }
+
+    void CloseKeyboard()
+    {
+        if (_keyboard != null)
+        {
+            _keyboard.active = false;
+        }
+
+        _keyboard = null;
+        DestroyPasswordSimulator();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -63,6 +91,7 @@ public class Helper : MonoBehaviour, IPointerClickHandler
         _keyboard = TouchScreenKeyboard.Open(_tmpInputField.text, TouchScreenKeyboardType.Default, false, false, false, false, "", _tmpInputField.characterLimit);
         TouchScreenKeyboard.hideInput = true;
 
+        _orgText = _tmpInputField.text;
         CreatePasswordSimulator();
     }
 
@@ -71,21 +100,19 @@ public class Helper : MonoBehaviour, IPointerClickHandler
     {
         if (!initialized || !Enable || _keyboard == null)
         {
-            DestroyPasswordSimulator();
+            CloseKeyboard();
             return;
         }
 
         if (_keyboard.status != TouchScreenKeyboard.Status.Visible)
         {
-            DestroyPasswordSimulator();
-            _keyboard = null;
+            CloseKeyboard();
             return;
         }
 
         if(_passwordInputFieldSimulator == null)
         {
-            DestroyPasswordSimulator();
-            _keyboard = null;
+            CloseKeyboard();
             return;
         }
 
