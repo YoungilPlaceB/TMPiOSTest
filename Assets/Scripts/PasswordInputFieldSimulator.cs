@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class PasswordInputFieldSimulator : MonoBehaviour
 {
@@ -8,9 +9,11 @@ public class PasswordInputFieldSimulator : MonoBehaviour
 
     [SerializeField] TMP_InputField _inputField;
     [SerializeField] RectTransform _background;
+    [SerializeField] Button _clearButton;
 
     [SerializeField] TMP_InputField _inputField_dark;
     [SerializeField] RectTransform _background_dark;
+    [SerializeField] Button _clearButton_dark;
 
     public UnityEvent onCloseAreaClicked = new UnityEvent();
     public UnityEvent onOKButtonClicked = new UnityEvent();
@@ -35,6 +38,17 @@ public class PasswordInputFieldSimulator : MonoBehaviour
                 return _background_dark;
             else
                 return _background;
+        }
+    }
+
+    public Button ClearButton
+    {         
+        get
+        {
+            if(isDark)
+                return _clearButton_dark;
+            else
+                return _clearButton;
         }
     }
 
@@ -87,6 +101,8 @@ public class PasswordInputFieldSimulator : MonoBehaviour
             MaskText();
             storedText = _keyboard.text;
         }
+
+        ClearButton.gameObject.SetActive(_keyboard.text.Length > 0);
     }
 
     public void OnCloseAreaClicked()
@@ -106,5 +122,10 @@ public class PasswordInputFieldSimulator : MonoBehaviour
     public void OnOKButtonClicked()
     {
         onOKButtonClicked.Invoke();
+    }
+
+    public void OnClearButtonClicked()
+    {
+        _keyboard.text = "";
     }
 }
