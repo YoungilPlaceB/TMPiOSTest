@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Utility
 {
     public static int GetKeyboardHeight(bool includeInput = true)
